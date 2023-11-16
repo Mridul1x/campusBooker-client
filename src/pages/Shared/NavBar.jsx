@@ -6,16 +6,16 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <Link href="/">Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link href="/colleges">Colleges</Link>
+        <Link to="/colleges">Colleges</Link>
       </li>
       <li>
-        <Link href="/admission">Admission</Link>
+        <Link to="/admission">Admission</Link>
       </li>
       <li>
-        <Link href="/my colleges">My Colleges</Link>
+        <Link to="/my colleges">My Colleges</Link>
       </li>
     </>
   );
@@ -47,7 +47,7 @@ const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
           Campus Booker
         </Link>
       </nav>
@@ -62,7 +62,7 @@ const Navbar = () => {
             className="tooltip tooltip-left tooltip-accent h-12 w-12 group"
             data-tip={user.name}
           >
-            <Link href="/profile">
+            <Link to="/profile">
               <img
                 src={user.image}
                 alt={user.name}
@@ -76,7 +76,7 @@ const Navbar = () => {
         )}
 
         {user && (
-          <Link href="/login" className="btn btn-primary">
+          <Link to="/login" className="btn btn-primary">
             Login
           </Link>
         )}
