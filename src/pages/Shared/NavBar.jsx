@@ -21,12 +21,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav
-      initial={{ y: "-100%" }}
-      whileInView={{ y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
-      className="navbar h-16 bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-xl"
-    >
+    <nav className="navbar h-16 bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-2xl">
       <nav className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -80,13 +75,13 @@ const Navbar = () => {
           </div>
         )}
 
-        {!user && (
-          <Link href="/login" className="btn btn-accent">
+        {user && (
+          <Link href="/login" className="btn btn-primary">
             Login
           </Link>
         )}
 
-        {user && <button className="btn btn-secondary">Logout</button>}
+        {!user && <button className="btn btn-primary">Logout</button>}
       </nav>
     </nav>
   );
