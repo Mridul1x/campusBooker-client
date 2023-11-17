@@ -33,3 +33,10 @@ input[type="text"]::placeholder {
   color: #1d232a;
   background-color: #00dac6;
 }
+.wrapper {
+  @apply container mx-auto px-5 md:px-0;
+}
+
+.section-padding {
+  @apply py-10 md:py-16;
+}

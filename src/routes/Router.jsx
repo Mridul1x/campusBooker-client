@@ -8,6 +8,8 @@ import CollegeItem from "../pages/Colleges/CollegeItem";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
+import Admission from "../pages/Admission/Admission";
+import MyColleges from "../pages/MyColleges/MyColleges";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,9 @@ const router = createBrowserRouter([
               </PrivateRoute>
             ),
             loader: ({ params }) => {
-              return fetch(`http://localhost:5000/colleges/${params.id}`);
+              return fetch(
+                `https://campus-booker-server.vercel.app/colleges/${params.id}`
+              );
             },
           },
         ],
@@ -43,7 +47,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/colleges/${params.id}`);
+          return fetch(
+            `https://campus-booker-server.vercel.app/colleges/${params.id}`
+          );
         },
       },
       {
@@ -53,6 +59,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/admission",
+        element: <Admission></Admission>,
+      },
+      {
+        path: "/mycolleges",
+        element: <MyColleges></MyColleges>,
       },
     ],
   },

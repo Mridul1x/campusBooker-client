@@ -34,7 +34,7 @@ const Register = () => {
           email: email,
         }).then(() => {
           const saveUser = { name: name, email: email };
-          fetch("http://localhost:5000/users", {
+          fetch("https://campus-booker-server.vercel.app/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -45,7 +45,6 @@ const Register = () => {
             .then((data) => {
               if (data.insertedId) {
                 form.reset();
-             
               }
               navigate("/");
             });

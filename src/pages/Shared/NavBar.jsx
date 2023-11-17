@@ -25,7 +25,9 @@ const Navbar = () => {
   const handleSearch = () => {
     console.log("Search Term:", searchTerm);
     fetch(
-      `http://localhost:5000/colleges?search=${encodeURIComponent(searchTerm)}`
+      `https://campus-booker-server.vercel.app/colleges?search=${encodeURIComponent(
+        searchTerm
+      )}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -51,7 +53,7 @@ const Navbar = () => {
         <Link to="/admission">Admission</Link>
       </li>
       <li>
-        <Link to="/collegeItem">My Colleges</Link>
+        <Link to="/mycolleges">My Colleges</Link>
       </li>
     </>
   );
@@ -83,7 +85,7 @@ const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost font-bold normal-case text-xl">
           Campus Booker
         </Link>
       </nav>
@@ -109,33 +111,32 @@ const Navbar = () => {
       </nav>
 
       <nav className="navbar-end gap-3 items-center">
-        {user && (
-          <div
-            className="tooltip tooltip-left tooltip-accent h-12 w-12 group"
-            data-tip={user.displayName}
-          >
-            <Link to="/profile">
-              <img
-                src={user.photoURL}
-                alt={user.displayName}
-                width={50}
-                height={50}
-                className="w-full h-full object-cover rounded-full"
-              />
-            </Link>
-          </div>
-        )}
-
-        {!user && (
+        {loading ? (
+          <span className="loading loading-dots loading-md me-2"></span>
+        ) : user ? (
+          <>
+            <div
+              className="tooltip tooltip-left tooltip-accent h-12 w-12 group"
+              data-tip={user.displayName}
+            >
+              <Link to="/profile">
+                <img
+                  src={user.photoURL}
+                  alt={user.displayName}
+                  width={50}
+                  height={50}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </Link>
+            </div>
+            <button onClick={handleLogOut} className="btn btn-error ">
+              Logout
+            </button>
+          </>
+        ) : (
           <Link to="/login" className="btn btn-accent">
             Login
           </Link>
-        )}
-
-        {user && (
-          <button onClick={handleLogOut} className="btn btn-accent">
-            Logout
-          </button>
         )}
       </nav>
     </nav>

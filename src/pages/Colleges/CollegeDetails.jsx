@@ -4,10 +4,18 @@ const CollegeDetails = () => {
   const handlePurchase = () => {
     console.log("okay");
   };
-  const { collegeName, image } = useLoaderData();
+  const {
+    collegeName,
+    image,
+    sports,
+    admissionDates,
+    details,
+    researchWorks,
+    sportsCategories,
+  } = useLoaderData();
 
   return (
-    <main>
+    <main className="">
       <div>
         <div
           className="image w-full h-[60vh] justify-center items-center flex flex-col bg-cover bg-no-repeat bg-center bg-fixed"
@@ -19,30 +27,67 @@ const CollegeDetails = () => {
             </span>
           </div>
         </div>
-        <div className="details-area container mx-5 md:mx-auto grid grid-cols-1 md:grid-cols-3 gap-20 py-20">
+        <div className="details-area container px-4 md:mx-auto grid grid-cols-1 md:grid-cols-3 gap-20 py-20">
           <div className="details-left md:col-span-2 flex flex-col gap-5">
             <h1 className="text-2xl font-semibold text-black uppercase">
-              Overview
+              Admission Process
             </h1>
-            <p className="text-lg"> {}</p>
-            <span className="text-xl font-medium text-rose-500">{}</span>
+            <p className="text-lg">{details.admissionProcess}</p>
+
+            <h1 className="text-2xl font-semibold text-black uppercase">
+              Event Details
+            </h1>
+            <div className="grid grid-cols-1 gap-3">
+              {Object.entries(details.eventsDetails).map(
+                ([eventName, eventDetail]) => (
+                  <div key={eventName}>
+                    <h2 className="text-lg font-semibold">{eventName}</h2>
+                    <p className="text-lg">{eventDetail}</p>
+                  </div>
+                )
+              )}
+            </div>
+
+            <h1 className="text-2xl font-semibold text-black uppercase">
+              Research Works
+            </h1>
+            <div className="grid grid-cols-1 gap-3">
+              {Object.entries(details.researchWorks).map(
+                ([researchArea, researchDetail]) => (
+                  <div key={researchArea}>
+                    <h2 className="text-lg font-semibold">{researchArea}</h2>
+                    <p className="text-lg">{researchDetail}</p>
+                  </div>
+                )
+              )}
+            </div>
+
+            <h1 className="text-2xl font-semibold text-black uppercase">
+              Sports Categories
+            </h1>
+            <div className="grid grid-cols-1 gap-3">
+              {Object.entries(details.sportsCategories).map(
+                ([sport, sportDetail]) => (
+                  <div key={sport}>
+                    <h2 className="text-lg font-semibold">{sport}</h2>
+                    <p className="text-lg">{sportDetail}</p>
+                  </div>
+                )
+              )}
+            </div>
           </div>
-          <div className="details-right md:col-span-1 md:row-auto gap-5 flex flex-col">
+
+          <div className="details-right md:row-auto gap-5 flex flex-col">
             <div className="flex flex-col gap-3 justify-between font-semibold">
-              <span className="text-3xl text-red-500">
-                <span className="text-black"> Price: </span>
+              <span className="text-xl text-red-500">
+                Admission Deadline: {admissionDates}
               </span>
               <span className="text-xl"></span>
             </div>
-            <button
-              onClick={handlePurchase}
-              className="text-center w-full bg-black/80 self-start p-3 lg:py-5 lg:px-10 text-white uppercase tracking-widest font-semibold border border-white/50 rounded-lg inset-2 appearance-none backdrop-blur-md shadow-lg bg-blend-color-dodge hover:bg-black/90 duration-500 hover:border-white/75"
-            >
-              Purchase Package
-            </button>
+
             <Link
-              href="/colleges"
-              className="text-center w-full bg-black/80 self-start p-3 lg:py-5 lg:px-10 text-white uppercase tracking-widest font-semibold border border-white/50 rounded-lg inset-2 appearance-none backdrop-blur-md shadow-lg bg-blend-color-dodge hover:bg-black/90 duration-500 hover:border-white/75"
+              to="/colleges"
+              className="text-center  bg-black/80 self-start p-3 w-full  text-white uppercase tracking-widest font-semibold border border-white/50 rounded-lg inset-2 appearance-none backdrop-blur-md shadow-lg bg-blend-color-dodge hover:bg-black/90 duration-500 hover:border-white/75"
             >
               Go Back
             </Link>
