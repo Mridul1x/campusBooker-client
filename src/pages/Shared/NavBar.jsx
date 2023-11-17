@@ -1,8 +1,44 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUniversity, FaSearch } from "react-icons/fa";
+import { AuthContext } from "../../provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const [user, setUser] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+  const { loading, user, logout } = useContext(AuthContext);
+  console.log(user);
+  const handleLogOut = () => {
+    logout()
+      .then((user) => {
+        if (!user) {
+          toast.success("Successfully logged out.");
+        }
+        navigate(location.pathname, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  const handleSearch = () => {
+    console.log("Search Term:", searchTerm);
+    fetch(
+      `http://localhost:5000/colleges?search=${encodeURIComponent(searchTerm)}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Search Results:", data);
+        setSearchResults(data);
+        navigate("/colleges", { state: { searchResults: data } });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -15,7 +51,7 @@ const Navbar = () => {
         <Link to="/admission">Admission</Link>
       </li>
       <li>
-        <Link to="/my colleges">My Colleges</Link>
+        <Link to="/collegeItem">My Colleges</Link>
       </li>
     </>
   );
@@ -54,34 +90,53 @@ const Navbar = () => {
 
       <nav className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+        <div className="bg-slate-400 py-2 px-3 rounded-2xl flex items-center justify-center">
+          <FaUniversity className="text-slate-300 w-5 h-5 mb-1"></FaUniversity>
+          <input
+            type="text"
+            placeholder="Search for a college name"
+            className="rounded-xl ps-2 pe-6 outline-none bg-transparent text-white"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => e.key == "Enter" && handleSearch()}
+          />
+          <button
+            onClick={handleSearch}
+            className="btn-sm btn glass  text-white "
+          >
+            <FaSearch></FaSearch>
+          </button>
+        </div>
       </nav>
 
       <nav className="navbar-end gap-3 items-center">
         {user && (
           <div
             className="tooltip tooltip-left tooltip-accent h-12 w-12 group"
-            data-tip={user.name}
+            data-tip={user.displayName}
           >
             <Link to="/profile">
               <img
-                src={user.image}
-                alt={user.name}
+                src={user.photoURL}
+                alt={user.displayName}
                 width={50}
                 height={50}
-                priority
                 className="w-full h-full object-cover rounded-full"
               />
             </Link>
           </div>
         )}
 
-        {user && (
-          <Link to="/login" className="btn btn-primary">
+        {!user && (
+          <Link to="/login" className="btn btn-accent">
             Login
           </Link>
         )}
 
-        {!user && <button className="btn btn-primary">Logout</button>}
+        {user && (
+          <button onClick={handleLogOut} className="btn btn-accent">
+            Logout
+          </button>
+        )}
       </nav>
     </nav>
   );

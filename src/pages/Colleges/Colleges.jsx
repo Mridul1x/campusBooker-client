@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import CollegeItem from "./CollegeItem";
+import { useLocation } from "react-router-dom";
 
 const Colleges = ({ forHome }) => {
   const [colleges, setColleges] = useState([]);
+  const location = useLocation();
+  const searchResults = location.state?.searchResults || [];
+
   useEffect(() => {
     fetch(`http://localhost:5000/colleges`)
       .then((res) => res.json())
@@ -14,7 +18,7 @@ const Colleges = ({ forHome }) => {
         console.log(errorMessage);
       });
   }, []);
-  console.log(colleges);
+
   return (
     <main className="packeges container mx-auto px-5 md:px-0 justify-center items-center py-10">
       <h1
@@ -26,15 +30,18 @@ const Colleges = ({ forHome }) => {
       </h1>
       <div className="packeges-wrpper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10 items-center">
         {!forHome &&
-          colleges?.map((college) => (
-            <CollegeItem key={college.collegeId} college={college} />
-          ))}
-
+          (searchResults.length > 0
+            ? searchResults.map((college) => (
+                <CollegeItem key={college.id} college={college} />
+              ))
+            : colleges.map((college) => (
+                <CollegeItem key={college.id} college={college} />
+              )))}
         {forHome &&
           colleges
             ?.slice(0, 3)
             .map((college) => (
-              <CollegeItem key={college.collegeId} college={college} />
+              <CollegeItem key={college.id} college={college} />
             ))}
       </div>
     </main>

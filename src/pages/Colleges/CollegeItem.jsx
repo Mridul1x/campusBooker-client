@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 const CollegeItem = ({ college }) => {
   return (
     <div className="college flex flex-col gap-5 shadow-lg rounded-xl overflow-hidden w-full border bg-white h-full">
-      <Link className="img relative group h-[14rem] md:h-[20rem] overflow-hidden">
+      <Link
+        to={`/college-details/${college._id}`}
+        className="img relative group h-[14rem] md:h-[20rem] overflow-hidden"
+      >
         <img
           src={college.image}
           alt={college.collegeName}
@@ -40,8 +43,8 @@ const CollegeItem = ({ college }) => {
           </p>
         </div>
         <Link
-          to={`/college-details/${college.collegeId}`} // Use the correct route for detailed information
-          className="bg-primary text-white text-center py-3 rounded-lg uppercase font-medium mt-3 hover:bg-indigo-500 duration-300"
+          to={`/college-details/${college._id}`} // Use the correct route for detailed information
+          className="bg-accent text-white text-center py-3 rounded-lg uppercase font-medium mt-3 hover:bg-indigo-500 duration-300"
         >
           Details
         </Link>
